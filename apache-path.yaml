@@ -1,0 +1,16 @@
+---
+- hosts: all 
+  become: yes
+  become_method: sudo 
+  tasks: 
+    - name: Update apache
+      package: 
+        name: httpd
+        state: latest
+      notify: APACHE
+
+  handlers:
+    - name: APACHE
+      systemd:
+        name: httpd
+        state: restarted
